@@ -14,3 +14,10 @@
 # ActiveSupport::Inflector.inflections(:en) do |inflect|
 #   inflect.acronym "RESTful"
 # end
+
+ActiveSupport::Inflector.inflections(:en) do |inflect|
+  # ...existing inflections...
+
+  # torna "status" igual no singular e no plural
+  inflect.uncountable %w( status )
+end

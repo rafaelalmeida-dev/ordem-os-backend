@@ -10,13 +10,118 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_06_000122) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_14_125647) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
-  create_table "produtos", force: :cascade do |t|
+  create_table "clientes", force: :cascade do |t|
     t.string "nome"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "enderecos", force: :cascade do |t|
+    t.string "logradouro"
+    t.string "cep"
+    t.string "cidade"
+    t.string "estado"
+    t.bigint "cliente_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cliente_id"], name: "index_enderecos_on_cliente_id"
+  end
+
+  create_table "equipamentos", force: :cascade do |t|
+    t.string "marca"
+    t.string "modelo"
+    t.string "num_serie"
+    t.integer "capacidade"
+    t.string "observacao"
+    t.bigint "cliente_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cliente_id"], name: "index_equipamentos_on_cliente_id"
+  end
+
+  create_table "ordem_servicos", force: :cascade do |t|
+    t.bigint "status_id"
+    t.date "data_agendamento"
+    t.date "data_fechamento"
+    t.string "observacao"
+    t.bigint "prioridade_id"
+    t.decimal "valor_total"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["prioridade_id"], name: "index_ordem_servicos_on_prioridade_id"
+    t.index ["status_id"], name: "index_ordem_servicos_on_status_id"
+  end
+
+  create_table "os_equipamentos", force: :cascade do |t|
+    t.bigint "equipamento_id"
+    t.bigint "ordem_servico_id"
+    t.string "laudo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["equipamento_id"], name: "index_os_equipamentos_on_equipamento_id"
+    t.index ["ordem_servico_id"], name: "index_os_equipamentos_on_ordem_servico_id"
+  end
+
+  create_table "os_servicos", force: :cascade do |t|
+    t.bigint "servico_id"
+    t.bigint "ordem_servico_id"
+    t.decimal "quantidade"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ordem_servico_id"], name: "index_os_servicos_on_ordem_servico_id"
+    t.index ["servico_id"], name: "index_os_servicos_on_servico_id"
+  end
+
+  create_table "os_tecnicos", force: :cascade do |t|
+    t.bigint "ordem_servico_id"
+    t.bigint "tecnico_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ordem_servico_id"], name: "index_os_tecnicos_on_ordem_servico_id"
+    t.index ["tecnico_id"], name: "index_os_tecnicos_on_tecnico_id"
+  end
+
+  create_table "prioridades", force: :cascade do |t|
     t.string "descricao"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "servicos", force: :cascade do |t|
+    t.string "nome"
+    t.decimal "valor"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "status", force: :cascade do |t|
+    t.string "nome"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tecnicos", force: :cascade do |t|
+    t.string "nome"
+    t.string "telefone"
+    t.string "especialidade"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "telefones", force: :cascade do |t|
+    t.string "numero"
+    t.bigint "cliente_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cliente_id"], name: "index_telefones_on_cliente_id"
+  end
+
+  create_table "testes", force: :cascade do |t|
+    t.string "nome"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

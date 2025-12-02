@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-class CreateProdutos < ActiveRecord::Migration[6.0]
+class CreateServicos < ActiveRecord::Migration[6.0]
   def change
-    create_table :produtos do |t|
+    create_table :servicos do |t|
       
         t.string :nome
       
-        t.string :descricao
+        t.decimal :valor
       
 
       t.timestamps
