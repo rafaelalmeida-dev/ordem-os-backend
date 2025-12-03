@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_14_125647) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_02_014116) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -18,6 +18,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_14_125647) do
     t.string "nome"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email"
+    t.datetime "data_registro"
   end
 
   create_table "enderecos", force: :cascade do |t|
@@ -34,7 +36,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_14_125647) do
   create_table "equipamentos", force: :cascade do |t|
     t.string "marca"
     t.string "modelo"
-    t.string "num_serie"
+    t.string "numero_serie"
     t.integer "capacidade"
     t.string "observacao"
     t.bigint "cliente_id"
@@ -52,6 +54,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_14_125647) do
     t.decimal "valor_total"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "numero_ordem"
+    t.string "descricao"
+    t.string "tipo_servico"
+    t.date "data_vencimento"
+    t.decimal "custo_estimado", precision: 10, scale: 2
+    t.bigint "cliente_id"
+    t.index ["cliente_id"], name: "index_ordem_servicos_on_cliente_id"
     t.index ["prioridade_id"], name: "index_ordem_servicos_on_prioridade_id"
     t.index ["status_id"], name: "index_ordem_servicos_on_status_id"
   end
@@ -104,12 +113,27 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_14_125647) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "tarefas", force: :cascade do |t|
+    t.bigint "ordem_servico_id", null: false
+    t.string "descricao"
+    t.string "status", default: "nao_iniciada"
+    t.bigint "tecnico_id"
+    t.datetime "data_inicio"
+    t.datetime "data_fim"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ordem_servico_id"], name: "index_tarefas_on_ordem_servico_id"
+    t.index ["tecnico_id"], name: "index_tarefas_on_tecnico_id"
+  end
+
   create_table "tecnicos", force: :cascade do |t|
     t.string "nome"
     t.string "telefone"
-    t.string "especialidade"
+    t.string "especialidades", array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email"
+    t.string "status_disponibilidade", default: "disponivel"
   end
 
   create_table "telefones", force: :cascade do |t|
@@ -125,4 +149,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_14_125647) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "ordem_servicos", "clientes"
+  add_foreign_key "tarefas", "ordem_servicos"
+  add_foreign_key "tarefas", "tecnicos"
 end
