@@ -6,20 +6,26 @@ module Api
       before_action :set_cliente, only: [:show, :update, :destroy]
 
       def index
-        @clientes = Cliente.all
-        render json: @clientes
+        clientes = Cliente.includes(:telefones, :enderecos).all
+        render json: clientes.as_json(include: [:telefones, :enderecos])
       end
 
       def show
-        render json: @cliente
+        cliente = Cliente.includes(:telefones, :enderecos).find(params[:id])
+        render json: cliente.as_json(include: [:telefones, :enderecos])
       end
 
       def create
-        @cliente = Cliente.new(cliente_params)
-        if @cliente.save
-          render json: @cliente, status: :created
+        # Opcional: mapear os arrays simples para *_attributes
+        params[:cliente] ||= {}
+        params[:cliente][:enderecos_attributes] = params[:enderecos] if params[:enderecos]
+        params[:cliente][:telefones_attributes] = params[:telefones] if params[:telefones]
+
+        cliente = Cliente.new(cliente_params)
+        if cliente.save
+          render json: cliente.as_json(include: [:enderecos, :telefones]), status: :created
         else
-          render json: @cliente.errors, status: :unprocessable_entity
+          render json: cliente.errors, status: :unprocessable_entity
         end
       end
 
@@ -45,7 +51,11 @@ module Api
       end
 
       def cliente_params
-        params.require(:cliente).permit()
+        params.require(:cliente).permit(
+          :nome, :email, :data_registro,
+          enderecos_attributes: [:logradouro, :cep, :cidade, :estado],
+          telefones_attributes: [:numero, :tipo]
+        )
       end
     end
   end
