@@ -45,7 +45,7 @@ module Api
       end
 
       def servico_params
-        params.require(:servico).permit()
+        params.require(:servico).permit(:nome,:valor)
       end
     end
   end

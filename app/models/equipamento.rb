@@ -2,6 +2,6 @@
 
 class Equipamento < ApplicationRecord
   
-  validates :marca, :modelo, :num_serie, :capacidade, :observacao, :cliente, presence: true
+  validates :marca, :modelo, :local_instalacao, :capacidade, :observacao, :cliente_id, presence: true
   
 end

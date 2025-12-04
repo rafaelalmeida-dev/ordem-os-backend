@@ -2,6 +2,6 @@
 
 class OsEquipamento < ApplicationRecord
   
-  validates :equipamento, :ordem_servico, :laudo, presence: true
+  validates :marca, :modelo, :local_instalacao, :capacidade,  presence: true
   
 end

@@ -2,6 +2,6 @@
 
 class Tecnico < ApplicationRecord
   
-  validates :nome, :telefone, :especialidade, presence: true
+  validates :nome, :telefone, :especialidades, presence: true
   
 end

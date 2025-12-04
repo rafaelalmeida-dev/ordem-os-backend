@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 class TecnicoSerializer < ActiveModel::Serializer
-  attributes :id, nome, telefone, especialidade
+  attributes :id, :nome, :telefone, :especialidades
 end
