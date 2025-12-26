@@ -61,7 +61,10 @@ module Api
           :tipo_servico,
           :data_vencimento,
           :custo_estimado,
-          :cliente_id
+          :cliente_id,
+          tecnico_ids: [],
+          servico_ids: [],
+          equipamento_ids: []
         )
       end
     end

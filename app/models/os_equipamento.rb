@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class OsEquipamento < ApplicationRecord
-  
-  validates :marca, :btus, :local_instalacao,  presence: true
+  belongs_to :ordem_servico
+  belongs_to :equipamento
+
+  validates :equipamento, :ordem_servico, presence: true
   
 end

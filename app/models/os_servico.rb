@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class OsServico < ApplicationRecord
-  
-  validates :servico, :ordem_servico, :quantidade, presence: true
+  belongs_to :ordem_servico
+  belongs_to :servico
+
+  validates :servico, :ordem_servico, presence: true
   
 end
