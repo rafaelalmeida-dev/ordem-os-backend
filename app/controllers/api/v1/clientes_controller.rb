@@ -53,8 +53,9 @@ module Api
       def cliente_params
         params.require(:cliente).permit(
           :nome, :email, :data_registro,
-          enderecos_attributes: [:logradouro, :cep, :cidade, :estado],
-          telefones_attributes: [:numero, :tipo]
+          enderecos_attributes: [:rua, :numero, :bairro, :complemento, :cidade],
+          telefones_attributes: [:numero, :tipo],
+          equipamentos_attributes: [:marca, :btus, :local_instalacao, :observacao]
         )
       end
     end

@@ -4,9 +4,11 @@ class Cliente < ApplicationRecord
   validates :nome, presence: true
   has_many :enderecos, dependent: :destroy
   has_many :telefones, dependent: :destroy
+  has_many :equipamentos, dependent: :destroy, inverse_of: :cliente
 
   accepts_nested_attributes_for :enderecos, allow_destroy: true
   accepts_nested_attributes_for :telefones, allow_destroy: true
+  accepts_nested_attributes_for :equipamentos, allow_destroy: true
 
   validate :deve_ter_ao_menos_um_endereco, on: :create
   validate :deve_ter_ao_menos_um_telefone, on: :create

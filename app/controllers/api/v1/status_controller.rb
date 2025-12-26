@@ -45,7 +45,7 @@ module Api
       end
 
       def status_params
-        params.require(:status).permit()
+        params.require(:status).permit(:nome)
       end
     end
   end

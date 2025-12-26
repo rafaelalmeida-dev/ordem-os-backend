@@ -2,7 +2,7 @@
 
 class Endereco < ApplicationRecord
   
-  validates :logradouro, :cep, :cidade, :estado, :cliente, presence: true
+  validates :rua, :numero, :bairro, :cidade, :cliente, presence: true
   belongs_to :cliente
   
 end

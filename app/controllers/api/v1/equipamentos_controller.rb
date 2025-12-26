@@ -6,7 +6,11 @@ module Api
       before_action :set_equipamento, only: [:show, :update, :destroy]
 
       def index
-        @equipamentos = Equipamento.all
+        if params[:cliente_id].present?
+          @equipamentos = Equipamento.where(cliente_id: params[:cliente_id])
+        else
+          @equipamentos = Equipamento.all
+        end
         render json: @equipamentos
       end
 
@@ -45,7 +49,7 @@ module Api
       end
 
       def equipamento_params
-        params.require(:equipamento).permit(:marca, :modelo, :local_instalacao, :capacidade, :observacao, :cliente_id)
+        params.require(:equipamento).permit(:marca, :btus, :local_instalacao, :observacao, :cliente_id)
       end
     end
   end

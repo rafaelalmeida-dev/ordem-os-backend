@@ -2,6 +2,6 @@
 
 class OsEquipamento < ApplicationRecord
   
-  validates :marca, :modelo, :local_instalacao, :capacidade,  presence: true
+  validates :marca, :btus, :local_instalacao,  presence: true
   
 end
