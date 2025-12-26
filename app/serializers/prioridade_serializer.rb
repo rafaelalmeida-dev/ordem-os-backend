@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 class PrioridadeSerializer < ActiveModel::Serializer
-  attributes :id, descricao
+  attributes :id, :descricao
 end
