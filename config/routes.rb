@@ -13,6 +13,7 @@ Rails.application.routes.draw do
         end
       end
       resources :servicos
+      resources :users
       resources :categorias_servico
       resources :status
       resources :ordem_servicos do
